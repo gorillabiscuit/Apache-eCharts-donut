@@ -234,9 +234,8 @@ export default function MultiPie() {
     chart.setOption(option)
 
     // Ensure label text metrics (affected by webfont load) are reflected in labelLine endpoints
-    const docWithFonts = document as Document & { fonts?: { ready?: Promise<void> } }
-    if (docWithFonts.fonts && docWithFonts.fonts.ready) {
-      docWithFonts.fonts.ready.then(() => {
+    if (typeof (document as any).fonts !== 'undefined' && (document as any).fonts.ready) {
+      ;(document as any).fonts.ready.then(() => {
         // Re-apply to force recomputation of labelLayout with final font metrics
         chart.setOption(option, true)
         chart.resize()
